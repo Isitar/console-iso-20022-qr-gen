@@ -1,15 +1,8 @@
 ﻿using Gma.QrCodeNet.Encoding;
 using Gma.QrCodeNet.Encoding.Windows.Render;
-using Gma.QrCodeNet.Encoding.Windows.Forms;
-using Svg;
-using System;
-using System.Collections.Generic;
 using System.Drawing;
 using System.Drawing.Imaging;
 using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Isitar.ISO20022.Qr.Data;
 
 namespace Isitar.ISO20022.Qr
@@ -20,6 +13,12 @@ namespace Isitar.ISO20022.Qr
         private const double codeSizeMm = 46;
         private const double crossSizeMm = 7;
         private const double cmInchFactor = 2.54;
+
+        /// <summary>
+        /// Draws a qr code with swisscross based on qr data to output path, format: png
+        /// </summary>
+        /// <param name="data">the iso 20022 data</param>
+        /// <param name="outputPath">the location for the file</param>
         public static void Generate(QrData data, string outputPath)
         {
 
@@ -27,10 +26,9 @@ namespace Isitar.ISO20022.Qr
             var codeSizePixel = (int)(dpi * codeSizeInch);
 
             var encoder = new QrEncoder(ErrorCorrectionLevel.M);
-            QrCode qrCode;
-            encoder.TryEncode(data.ToString(), out qrCode);
+            encoder.TryEncode(data.ToString(), out QrCode qrCode);
 
-
+            #region fiddle for svg
 
             //var dark = new MyGColor(Color.Black);
             //var light = new MyGColor(Color.White);
@@ -64,14 +62,11 @@ namespace Isitar.ISO20022.Qr
 
             //var width = bmp.Width;
             //bmp.Save("E:\\temp\\output_FromSvg.png", ImageFormat.Png);
-
+            #endregion
 
             GraphicsRenderer gRenderer = new GraphicsRenderer(
                 new FixedModuleSize(100, QuietZoneModules.Zero),
                 Brushes.Black, Brushes.White);
-
-
-
 
             MemoryStream ms = new MemoryStream();
             gRenderer.WriteToStream(qrCode.Matrix, ImageFormat.Png, ms);
@@ -82,9 +77,6 @@ namespace Isitar.ISO20022.Qr
             using (var g = Graphics.FromImage(finalImage))
             {
                 g.DrawImage(bmpCode, new Rectangle(0, 0, codeSizePixel, codeSizePixel));
-                //gRenderer.Draw(g, qrCode.Matrix);
-                //gRenderer.Draw(g, qrCode.Matrix);
-
                 var crossLocationCM = ((codeSizeMm - crossSizeMm) / 10) / 2;
                 var crossLocationInch = crossLocationCM / cmInchFactor;
                 var crossLocationPx = (int)(crossLocationInch * dpi);
@@ -98,13 +90,8 @@ namespace Isitar.ISO20022.Qr
                         ));
             }
             finalImage.Save(outputPath, ImageFormat.Png);
-
-            //using (FileStream fs = new FileStream("E:\\temp\\output.png", FileMode.Create, FileAccess.Write))
-            //{
-            //    gRenderer.WriteToStream(qrCode.Matrix, ImageFormat.Png, fs,new Point(dpi,dpi));
-            //}
         }
-
+        #region helper class for svg
         //private class MyGColor : GColor
         //{
         //    public MyGColor(byte r, byte g, byte b, byte a)
@@ -130,6 +117,7 @@ namespace Isitar.ISO20022.Qr
 
         //    public override byte A { get; }
         //}
+        #endregion
     }
 
 }
