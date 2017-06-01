@@ -18,7 +18,7 @@ namespace Isitar.ISO20022.Qr.Data
             {
                 if ((value.HasValue) && (value.Value.ToString(QrData.DecimalFormat).Length > 12))
                 {
-                    throw new ArgumentException("max length 12");
+                    throw new ArgumentException("max length 12 (including decimal point)");
                 }
                 amt = value;
             }
@@ -32,7 +32,7 @@ namespace Isitar.ISO20022.Qr.Data
             var sb = new StringBuilder();
             sb.AppendLine(QrData.GetOptional(Amt));
             sb.AppendLine(Ccy.ToString());
-            sb.AppendLine(QrData.GetOptional(ReqdExctnDt));
+            sb.Append(QrData.GetOptional(ReqdExctnDt));
             return sb.ToString();
         }
     }

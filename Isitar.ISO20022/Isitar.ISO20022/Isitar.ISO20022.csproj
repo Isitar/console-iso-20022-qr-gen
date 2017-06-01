@@ -37,6 +37,7 @@
       <HintPath>..\packages\Svg.2.3.0\lib\net35\Svg.dll</HintPath>
     </Reference>
     <Reference Include="System" />
+    <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
     <Reference Include="System.Drawing" />
     <Reference Include="System.Xml.Linq" />
@@ -53,6 +54,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
+    <Compile Include="Qr\Data\QrAddress.cs" />
     <Compile Include="Qr\Data\QrCcyAmtDate.cs" />
     <Compile Include="Qr\Data\QrCdtr.cs" />
     <Compile Include="Qr\Data\QrCdtrInf.cs" />

@@ -19,27 +19,32 @@ namespace Isitar.ISO20022.Qr.Data
 
         public override string ToString()
         {
+            
+            
+
             var sb = new StringBuilder();
-            sb.Append(Header.ToString());
-            sb.Append(CdtrInf.ToString());
+            sb.AppendLine(Header.ToString());
+            sb.AppendLine(CdtrInf.ToString());
             if (UltmtCdtr != null)
             {
-                sb.Append(UltmtCdtr.ToString());
+                sb.AppendLine(UltmtCdtr.ToString());
             }
             else
             {
-                sb.Append(QrUltmtCdtr.GetEmptyDataValue());
+                sb.AppendLine(QrUltmtCdtr.GetEmptyDataValue());
             }
             
-            sb.Append(CcyAmtDate.ToString());
+            sb.AppendLine(CcyAmtDate.ToString());
+
             if (UltmtDbtr != null)
             {
-                sb.Append(UltmtDbtr.ToString());
+                sb.AppendLine(UltmtDbtr.ToString());
             }
             else
             {
-                sb.Append(QrUltmtDbtr.GetEmptyDataValue());
+                sb.AppendLine(QrUltmtDbtr.GetEmptyDataValue());
             }
+
             sb.Append(RmtInf.ToString());
 
             return sb.ToString();

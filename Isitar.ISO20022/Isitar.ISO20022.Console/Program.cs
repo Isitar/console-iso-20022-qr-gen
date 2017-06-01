@@ -30,7 +30,7 @@ namespace Isitar.ISO20022.Console
                 },
                 CcyAmtDate = new QrCcyAmtDate
                 {
-                    Amt = 123456789.12m,
+                    Amt = 123456789.12654655m,
                     Ccy = QrCcyAmtDate.CurrencySelection.CHF,
                     ReqdExctnDt = DateTime.Today.AddDays(30)
                 },
@@ -46,7 +46,10 @@ namespace Isitar.ISO20022.Console
 
 
             QrCodeGenerator.Generate(normalData, "E:\\temp\\outputNormal.png");
-            
+            normalData.RmtInf.Tp = QrRmtInf.TpSelection.QRR;
+            normalData.RmtInf.Ref = "210000000003139471430009017";
+            normalData.RmtInf.Ustrd = "uftrag vom15.09.2019##S5.09.2019##S1/01/20170309/11/10201409/20/14000000/22/36958/30/CH106017086/40/1020/41/3010";
+            QrCodeGenerator.Generate(normalData, "E:\\temp\\outputRef.png");
         }
     }
 }

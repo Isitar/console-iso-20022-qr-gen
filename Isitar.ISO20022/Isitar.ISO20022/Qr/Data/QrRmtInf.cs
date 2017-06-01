@@ -21,7 +21,7 @@ namespace Isitar.ISO20022.Qr.Data
             var sb = new StringBuilder();
             sb.AppendLine(Tp.ToString());
             sb.AppendLine(QrData.GetOptional(Ref));
-            sb.AppendLine(QrData.GetOptional(Ustrd));
+            sb.Append(QrData.GetOptional(Ustrd));
             return sb.ToString();
         }
     }

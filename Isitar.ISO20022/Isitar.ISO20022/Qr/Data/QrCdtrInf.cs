@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -8,20 +9,13 @@ namespace Isitar.ISO20022.Qr.Data
 {
     public class QrCdtrInf
     {
-        private string iban;
-
-        public string IBAN
+        public QrCdtrInf()
         {
-            get { return iban; }
-            set
-            {
-                if (value.Length != 21)
-                {
-                    throw new ArgumentException("Lenghth has to be 21");
-                }
-                iban = value;
-            }
+            Cdtr = new QrCdtr();
         }
+
+        [StringValidator(MaxLength = 21, MinLength = 21)]
+        public string IBAN { get; set; }
 
         public QrCdtr Cdtr { get; set; }
 
